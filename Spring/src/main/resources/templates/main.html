@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body{
+        width: 80%;
+        margin: 0 auto;
+    }
+    a{
+        text-decoration-line: none;
+        color: #008485;
+    }
+    /* 모달 스타일 */
+    .modalMain {
+        display: none; /* 모달 창 초기에 숨김 */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5); /* 배경을 반투명하게 설정 */
+    }
+
+    .modal-content-main {
+        border-radius: 8px;
+        background-color: #fefefe;
+        margin: 15% auto;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 800px;
+        height: 500px;
+        display: flex;
+        text-align: center;
+    }
+
+    .close {
+        color: #aaa;
+        padding: 20px;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-header-main {
+        flex: 40%; /* 헤더 영역 20% */
+        background-color: #888;
+    }
+
+    .modal-body-main {
+        flex: 60%; /* 본문 영역 80% */
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 40px;
+        box-sizing: border-box;
+        background: #ffffff;
+        color: #008485;
+        border: 1px solid #008485;
+        border-radius: 10px;
+    }
+    /* CSS 스타일링 */
+    header {
+      background-color: #f1f1f1;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      flex: 1;
+    }
+    nav {
+      flex: 1;
+      text-align: right;
+    }
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav li {
+      display: inline;
+      margin-left: 10px;
+    }
+    .login {
+      flex: 1;
+      text-align: right;
+    }
+    .login a {
+      padding: 5px 10px;
+      background-color: #008485;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+
+    }
+    .content {
+      background-color: #eaeaea;
+      color: white;
+      padding: 20px;
+      height: 800px;
+    }
+    footer {
+      background-color: #c2c2c2;
+      padding: 20px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="/" alt="">로고
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">메뉴1</a></li>
+            <li><a href="#">메뉴2</a></li>
+            <li><a href="#">메뉴3</a></li>
+        </ul>
+    </nav>
+    <div class="login" onclick="openModal()">
+        <a href="#">로그인</a>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/" alt="">
+            </div>
+            <div class="modal-body">
+                <h3>로그인</h3>
+                <button class="button">로그인 카카오로 계속하기</button>
+                <button class="button">네이버로 계속하기</button>
+                <button class="button">이메일로 로그인</button>
+                <button class="button">이메일로 회원가입</button>
+
+            </div>
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+    </div>
+
+</header>
+
+<!-- 나머지 콘텐츠 영역 -->
+<div class="content">
+    <!-- 콘텐츠 내용을 추가하세요 -->
+</div>
+
+<footer>
+    <!-- 푸터 내용을 추가하세요 -->
+</footer>
+<script>
+    // 모달 열기 함수
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>

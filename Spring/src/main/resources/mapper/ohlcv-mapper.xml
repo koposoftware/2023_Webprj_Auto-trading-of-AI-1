@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.OhlcvMapper">
+    <select id="findAll" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv
+    </select>
+
+    <insert id="insertData" parameterType="com.hanaonestock.stock.model.dto.Ohlcv">
+        INSERT INTO OHLCV
+            (isin, s_date, open, high, low, close, volume, amount, updown)
+        VALUES
+            (#{isin}, TO_DATE(#{s_date}, 'YYYYMMDD'),, #{open}, #{high}, #{low}, #{close}, #{volume}, #{amount}, #{updown})
+    </insert>
+
+    <select id="findByIsinAndDate" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv where isin = #{isin} and s_date = #{date}
+    </select>
+
+    <select id="findByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        select * from ohlcv where isin = #{isin}
+    </select>
+
+    <select id="findRisingTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        SELECT s.isin, s.name
+        FROM stock s
+        JOIN (
+            SELECT *
+            FROM ohlcv
+            WHERE S_DATE =
+                  CASE
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                      ELSE
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                      END
+            ORDER BY UPDOWN DESC
+        ) o ON s.isin = o.isin
+        WHERE ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findFallingTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        SELECT s.isin, s.name
+        FROM stock s
+        JOIN (
+            SELECT *
+            FROM ohlcv
+            WHERE S_DATE =
+                  CASE
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                      ELSE
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                      END
+            ORDER BY UPDOWN ASC
+        ) o ON s.isin = o.isin
+        WHERE ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findVolumeTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        SELECT s.isin, s.name
+        FROM stock s
+        JOIN (
+            SELECT *
+            FROM ohlcv
+            WHERE S_DATE =
+                  CASE
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                      ELSE
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                      END
+            ORDER BY VOLUME DESC
+        ) o ON s.isin = o.isin
+        WHERE ROWNUM <= 5
+        ]]>
+    </select>
+
+    <select id="findAmountTop5ByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Ohlcv">
+        <![CDATA[
+        SELECT s.isin, s.name
+        FROM stock s
+        JOIN (
+            SELECT *
+            FROM ohlcv
+            WHERE S_DATE =
+                  CASE
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                      WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                      ELSE
+                              TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                      END
+            ORDER BY AMOUNT DESC
+        ) o ON s.isin = o.isin
+        WHERE ROWNUM <= 5
+        ]]>
+    </select>
+
+</mapper>

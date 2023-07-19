@@ -1,0 +1,150 @@
+.highlight {
+    color: #008485;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 0;
+}
+
+h1 {
+    font-size: 50px;
+    font-weight: 900;
+}
+
+h2 {
+    font-size: 35px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #888888;
+}
+
+h4 {
+    font-size: 25px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.btn {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    background-color: #008485;
+    color: white;
+    border-radius: 20px;
+    font-size: 25px;
+    width: 250px;
+    height: 60px;
+    line-height: 60px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #006363;
+}
+
+.button {
+    text-align: center;
+    background-color: #008485;
+    border: none;
+    color: white;
+    width: 180px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+}
+
+.button:hover {
+    background-color: #006363;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.form-body-main {
+    margin-bottom: 70px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/*모달 스타일*/
+.modalMain {
+    display: none; /* 모달 창 초기에 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.modal-content-main {
+    border-radius: 8px;
+    background-color: white;
+    margin: 15% auto;
+    width: 80%;
+    max-width: 800px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* 추가 */
+}
+
+.modal-header-main {
+    flex : 1;
+    background-color: #A6D4D4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 40px 15px 15px 15px;
+    text-align: center;
+}
+
+.modal-body-main {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

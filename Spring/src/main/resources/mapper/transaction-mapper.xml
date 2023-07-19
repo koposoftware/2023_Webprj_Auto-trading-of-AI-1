@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.transaction.model.dao.TransactionMapper">
+    <insert id="insertBuyTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
+        INSERT INTO TRANSACTION (T_ID, ID, BUY, VOLUME, ISIN, DURATION)
+        VALUES (T_ID_seq.NEXTVAL, #{id}, #{buy}, #{volume}, #{isin}, #{duration})
+    </insert>
+
+    <update id="updateSellTransaction" parameterType="com.hanaonestock.transaction.model.dto.Transaction">
+        UPDATE TRANSACTION
+        SET SELL = #{sell}, DATE_SELL = sysdate + 3/8
+        WHERE ID = #{id} and ISIN = #{isin}
+    </update>
+
+    <select id="sumHasVolumeByIdIsin" resultType="int" parameterType="java.util.Map">
+        select sum(volume)
+        from transaction
+        where id = #{id} and isin = #{isin} and date_sell is null
+    </select>
+
+    <select id="findTransactionsById" resultType="com.hanaonestock.transaction.model.dto.Result" parameterType="String">
+        SELECT ID, NAME, ISIN, BUY, SELL, VOLUME, DATE_BUY, DATE_SELL
+        FROM (SELECT TRANSACTION.*, STOCK.NAME FROM TRANSACTION, STOCK WHERE TRANSACTION.ISIN = STOCK.ISIN)
+        where ID = #{id} and SELL is NOT null
+    </select>
+    <select id="selectDayOfTransaction" resultType="double" parameterType="String">
+        select round((sum(sell * volume)-sum(buy * volume))/sum(buy * volume)*100, 1) as 당일실현수익률
+        from transaction where id = #{id} and (DATE_BUY = trunc(sysdate - 1 + 3/8)) and (date_sell = trunc(sysdate + 3/8))
+    </select>
+
+    <select id="dailyPerfomanceById" resultType="com.hanaonestock.transaction.model.dto.DailyPerformance" parameterType="String">
+        select TO_CHAR(TMP.DATE_BUY, 'YYYY-MM-DD') AS DATEBUY , round(((sell * volume)-(buy * volume))/(buy * volume)*100, 1) as DAILYPERFORMANCE,
+               (SELECT goal from INVEST_INFO where id = #{id}) AS GOAL
+        FROM (SELECT DATE_BUY, SUM(sell) AS SELL, SUM(VOLUME) AS VOLUME, SUM(BUY) AS BUY
+              from TRANSACTION
+              WHERE id = #{id} and SELL is NOT null GROUP BY DATE_BUY) TMP
+        ORDER BY DATEBUY ASC
+    </select>
+
+</mapper>

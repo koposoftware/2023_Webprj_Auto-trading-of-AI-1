@@ -1,0 +1,248 @@
+h3 {
+    color: black;
+}
+
+.a {
+    position: relative;
+}
+
+.search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.content {
+    flex-direction: column;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 20px 0px 30px 0px;
+    width: 1050px; height: 700px;
+    background-color: #DDF1ED;
+    border-radius: 20px;
+}
+
+/*검색 메뉴*/
+.search-menu {
+    width: 1050px; height: 35px;
+    padding: 10px 0px 10px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    align-items: center;
+}
+
+.search-box {
+    width: 500px;
+    border: 2px solid #797979;
+    font-size: 14px;
+    padding: 4px 0 4px 14px;
+    border-radius: 50px;
+}
+
+.search-button {
+    margin-left: 5px;
+    width: 50px;
+    border-radius: 20px;
+    background-color: #888888;
+}
+
+/* 사이드 메뉴 */
+.left_sub_menu {
+    display: flex;
+    top: 50px;
+    width: 180px;
+    left: 45px;
+    background: white;
+    border-right: 1px solid rgba(0, 0, 0, 0.07);
+    bottom: 50px;
+    height: 100%;
+    margin-top: 0px;
+    margin-right: -20px;
+    box-shadow: 0 0px 24px 0 rgb(0 0 0 / 6%), 0 1px 0px 0 rgb(0 0 0 / 2%);
+    color: black;
+    overflow-y: auto;
+}
+
+.left_sub_menu>.sub_menu li:hover {
+    color: #008485;
+    background-color: #e1e1e1;
+}
+
+.left_sub_menu>.sub_menu li {
+    color: #333;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 10px 0px 8px 10px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.sub_menu>h2 {
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #797979;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.stock_name {
+    cursor: pointer;
+}
+
+.small_menu {
+    pointer-events: none;
+}
+
+.sub_menu>.stock_name>.small_menu li {
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 0px solid #e1e1e1;
+    margin-left: 14px;
+    padding-top: 8px;
+}
+
+ul {
+    padding-inline-start: 0px;
+}
+
+a {
+    color: #797979;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+ul {
+    list-style: none;
+}
+
+ol,
+ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.has_sub {
+    width: 100%;
+}
+
+.chart_div {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    opacity: 0.7;
+    border-radius: 20px;
+    margin: 20px 10px 10px 40px;
+    width: 760px;
+    height: 400px;
+    color: black;
+}
+
+.trade_div {
+    background-color: white;
+    opacity: 0.7;
+    border-radius: 20px;
+    margin: 12px 12px 20px 40px;
+    padding: 20px;
+    color: black;
+    display: flex;
+    justify-content: center
+}
+
+.left-column,
+.right-column,
+.last-column {
+    display: flex;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.form-group {
+    margin: 0px 15px 15px 20px;
+}
+
+.left-column label,
+.right-column label,
+.last-column label{
+    margin-bottom: 20px;
+}
+
+.percent-buttons {
+    display: flex;
+    align-items: center;
+    width: 250px;
+}
+
+.percent-buttons button {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.form-group input[type="text"],
+.percent-buttons button {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.form-group:last-child {
+    margin-top: auto;
+}
+
+#sellButton, #buyButton {
+    display: block;
+    margin: 18px 10px 10px 20px;
+    width: 250px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: #008485;
+    color: white;
+    cursor: pointer;
+}
+
+#sellButton:hover, #buyButton:hover {
+    background-color: #006c6c;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    background-color: #008485;
+    opacity: 0.9;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #006c6c;
+}

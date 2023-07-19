@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.FundamentalMapper">
+    <select id="findAll" parameterType="com.hanaonestock.stock.model.dto.Fundamental" resultType="com.hanaonestock.stock.model.dto.Fundamental">
+        SELECT *
+        FROM fundamental
+    </select>
+
+    <insert id="insertData" parameterType="com.hanaonestock.stock.model.dto.Fundamental">
+        INSERT INTO FUNDAMENTAL
+            (ISIN, S_DATE, BPS, PER, PBR, EPS, DIV, DPS)
+        VALUES
+            (#{isin}, TO_DATE(#{s_date}, 'YYYYMMDD'), #{bps}, #{per}, #{pbr}, #{eps}, #{div}, #{dps})
+    </insert>
+
+</mapper>

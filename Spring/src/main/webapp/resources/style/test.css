@@ -1,0 +1,48 @@
+body {
+    background-image: url("../img/background2.png");
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 15px;
+}
+
+.content {
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.investment-duration input[type="radio"] + label {
+    margin-right: 100px;
+    color: #5D5D5D;
+}
+
+.investment-experience label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    color: #5D5D5D;
+}
+
+.investment-experience label:last-child {
+    margin-bottom: 0;
+}
+
+.investment-level label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    color: #5D5D5D;
+}
+
+.investment-level label:last-child {
+    margin-bottom: 0;
+}

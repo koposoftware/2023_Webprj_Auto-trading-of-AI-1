@@ -1,0 +1,5 @@
+Flask
+Flask-RESTX
+pandas
+pykrx
+scikit-learn

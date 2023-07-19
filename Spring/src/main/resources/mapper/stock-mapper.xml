@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.StockMapper">
+    <select id="findByName" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select * from stock where name = #{name}
+    </select>
+
+    <select id="findByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select * from stock where isin = #{isin}
+    </select>
+
+    <select id="stockListFindByName" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+    <![CDATA[
+        select *
+        from (select * from stock where name like CONCAT(#{name}, '%') ORDER BY name ASC)
+        where ROWNUM <= 10
+        ]]>
+    </select>
+
+    <select id="stockListFindByIsin" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+    <![CDATA[
+        select *
+        from (select * from stock where isin like CONCAT(#{isin}, '%') order by isin asc)
+        where ROWNUM <= 10
+        ]]>
+    </select>
+
+    <select id="recommendedStock" resultType="com.hanaonestock.stock.model.dto.RecommendedStock">
+    <![CDATA[
+        SELECT O1.ISIN, O2.S_DATE, S.NAME, O2.UPDOWN, O2.CLOSE, ABS(O2.CLOSE - ROUND(O2.CLOSE / (1 + (O2.UPDOWN/100)) )) AS GAP
+        FROM
+            (SELECT * FROM PREDICT WHERE S_DATE =
+                 CASE
+                     WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SAT' THEN
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 2 ELSE 1 END
+                     WHEN TO_CHAR(SYSDATE, 'DY', 'NLS_DATE_LANGUAGE=AMERICAN') = 'SUN' THEN
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 3 ELSE 2 END
+                     ELSE
+                             TRUNC(SYSDATE + 3 / 8) - CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') <= '16:00:00' THEN 1 ELSE 0 END
+                     END AND PREDICT = 1 ORDER BY P_RATE DESC) P
+                INNER JOIN
+            (SELECT ISIN, ROUND(PERCENTILE_CONT(0.1) WITHIN GROUP (ORDER BY VOLUME)) AS Bottom FROM OHLCV GROUP BY ISIN) O1
+            ON P.ISIN = O1.ISIN
+                INNER JOIN
+            (SELECT ISIN, ROUND(AVG(PER)) AS AG_PER FROM FUNDAMENTAL GROUP BY ISIN) F
+            ON P.ISIN = F.ISIN
+                INNER JOIN
+            OHLCV O2
+            ON P.ISIN = O2.ISIN AND P.S_DATE = O2.S_DATE
+                INNER JOIN
+            STOCK S
+            ON P.ISIN = S.ISIN
+        WHERE O2.VOLUME >= O1.Bottom AND F.AG_PER > 1
+        ORDER BY P.P_RATE DESC
+            FETCH FIRST 4 ROWS ONLY
+        ]]>
+    </select>
+    <update id="updateGoalOfInvestInfoById" parameterType="HashMap">
+        UPDATE INVEST_INFO SET goal = #{goal} WHERE ID = #{id}
+    </update>
+    <select id="selectAssetsById" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Stock">
+        select
+        name,
+        isin,
+        buy * sum(volume) as totalPrice
+        from (select t.id, s.name, t.isin, t.buy, t.volume, t.sell from stock s inner join transaction t on s.isin = t.isin)
+        where sell is null and id = #{id}
+        group by isin, buy, id, name
+    </select>
+</mapper>

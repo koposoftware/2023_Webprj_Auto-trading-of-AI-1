@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.member.model.dao.MemberMapper">
+    <!-- 회원 전체 조회 -->
+    <select id="getAllMember" parameterType="com.hanaonestock.member.model.dto.Member"
+            resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
+        FROM member
+    </select>
+    <!-- 회원 등록 -->
+    <insert id="insertMember" parameterType="com.hanaonestock.member.model.dto.Member">
+        INSERT INTO member (id, email, name, pw, m_id, phone, provider)
+        VALUES (#{id}, #{email}, #{name}, #{password}, SEQ_MEMBER.nextval, #{phoneNumber}, #{provider})
+    </insert>
+    <insert id="insertInvestInfo" parameterType="com.hanaonestock.member.model.dto.Member">
+        INSERT INTO invest_info (id, goal)
+        VALUES (#{id}, #{goal})
+    </insert>
+    <!-- 회원 아이디 조회 -->
+    <select id="selectOneMember" parameterType="String" resultType="int">
+        SELECT count(*)
+        FROM member
+        where id = #{id}
+    </select>
+    <!-- 로그인 -->
+    <select id="loginMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT
+        *
+        FROM member
+        where id = #{id}
+        and pw = #{password}
+    </select>
+    <select id="selectNameAndEmailOfMember" parameterType="HashMap" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT *
+        FROM member
+        where email = #{email}
+          and name = #{name}
+    </select>
+    <select id="selectNameOfMember" parameterType="String" resultType="com.hanaonestock.member.model.dto.Member">
+        SELECT
+        id as id,
+        pw as password,
+        name as name,
+        email as email,
+        phone as phoneNumber,
+        provider as provider
+        FROM member
+        where id = #{id}
+    </select>
+    <delete id="deleteMember" parameterType="string">
+        delete from member where id=#{id}
+    </delete>
+    <select id="selectInvestInfo" parameterType="String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
+        select * from invest_info where id = #{id}
+    </select>
+    <update id="updateMember" parameterType="com.hanaonestock.member.model.dto.Member">
+        update member set
+        pw=#{password},
+        phone=#{phoneNumber}
+        where id = #{id}
+    </update>
+    <update id="updateInvest" parameterType="com.hanaonestock.member.model.dto.InvestInfo">
+        update invest_info set
+        goal = #{goal}
+        where id = #{id}
+    </update>
+    <select id="findInvestInfoById" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.InvestInfo">
+        SELECT *
+        FROM INVEST_INFO
+        WHERE ID = #{id}
+    </select>
+    <update id="updateInvestInfoCashById" parameterType="java.util.Map">
+        UPDATE INVEST_INFO SET CASH = #{cash} WHERE ID = #{id}
+    </update>
+    <!-- 입금 등록 -->
+    <insert id="insertDeposit" parameterType="com.hanaonestock.member.model.dto.Deposit">
+        INSERT INTO deposit (id, amount)
+        VALUES (#{id}, #{amount})
+    </insert>
+    <!--    충전 내역-->
+    <select id="selectDeposit" parameterType="java.lang.String" resultType="com.hanaonestock.member.model.dto.Deposit">
+        SELECT *
+        FROM deposit
+        WHERE ID = #{id}
+        ORDER BY D_ID
+    </select>
+</mapper>

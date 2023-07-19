@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanaonestock.stock.model.dao.PredictMapper">
+    <select id="findAll" resultType="com.hanaonestock.stock.model.dto.Predict">
+        select * from predict
+    </select>
+
+    <insert id="insertData" parameterType="com.hanaonestock.stock.model.dto.Predict">
+        INSERT INTO PREDICT
+            (isin, s_date, close, p_price, p_rate, predict)
+        VALUES
+            (#{isin}, TO_DATE(#{s_date}, 'YYYYMMDD'),, #{close}, #{p_price}, #{p_rate}, #{predict})
+    </insert>
+
+    <insert id="updateData" parameterType="com.hanaonestock.stock.model.dto.Predict">
+        UPDATE PREDICT SET
+            r_price = #{r_price}, r_rate = #{r_rate}, correct = #{correct} , error = #{error}
+        WHERE isin = #{isin} AND s_date = TO_DATE(#{s_date}, 'YYYYMMDD'),
+    </insert>
+
+    <select id="findByIsinAndDate" resultType="com.hanaonestock.stock.model.dto.Predict">
+        select * from PREDICT where isin = #{isin} and s_date = #{date}
+    </select>
+
+    <select id="findByDate" parameterType="String" resultType="com.hanaonestock.stock.model.dto.Predict">
+        select * from PREDICT where s_date = #{s_date}
+    </select>
+
+</mapper>
